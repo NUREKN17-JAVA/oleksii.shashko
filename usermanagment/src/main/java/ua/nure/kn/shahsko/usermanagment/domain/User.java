@@ -53,10 +53,24 @@ public class User implements Serializable {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         int currentYear = calendar.get(Calendar.YEAR);
+        int currentMonth = calendar.get(Calendar.MONTH);
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
 
         calendar.setTime(getDateOfBirth());
         int birthYear = calendar.get(Calendar.YEAR);
+        int birthMonth = calendar.get(Calendar.MONTH);
+        int birthDay = calendar.get(Calendar.DAY_OF_MONTH);
 
-        return currentYear - birthYear;
+        if(currentMonth - birthMonth <= 0) {
+            if(currentDay - birthDay <= 0) {
+                return currentYear - birthYear;
+            }
+            else {
+                return currentYear - birthYear - 1;
+            }
+        }
+        else {
+            return currentYear - birthYear;
+        }
     }
 }

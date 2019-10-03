@@ -3,18 +3,28 @@ package ua.nure.kn.shahsko.usermanagment.domain;
 import junit.framework.TestCase;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class UserTest extends TestCase {
 
-    public static final int DAY_OF_BIRTH = 13;
+    private static final int DAY_OF_BIRTH = 13;
+    private static final int DAY_OF_BIRTH_1 = 3;
+    private static final int DAY_OF_BIRTH_2 = 1;
+    private static final int DAY_OF_BIRTH_3 = 4;
 
-    public static final int MONTH_OF_BIRTH = Calendar.MAY;
-    public static final int YEAR_OF_BIRTH = 2000;
-    public static final int ETHALON_AGE = 19;
+    private static final int MONTH_OF_BIRTH = Calendar.MAY;
+    private static final int YEAR_OF_BIRTH = 2000;
+    private static final int ETHALON_AGE = 19;
 
-    public static final int MONTH_OF_BIRTH_1 = Calendar.SEPTEMBER;
-    public static final int YEAR_OF_BIRTH_1 = 1999;
-    public static final int ETHALON_AGE_1 = 20;
+    private static final int MONTH_OF_BIRTH_1 = Calendar.SEPTEMBER;
+    private static final int YEAR_OF_BIRTH_1 = 1999;
+    private static final int ETHALON_AGE_1 = 20;
+
+
+    private static final int MONTH_OF_BIRTH_2 = Calendar.OCTOBER;
+    private static final int ETHALON_AGE_3 = 18;
+
+    // Works on 03 October 2019
 
     private User user;
 
@@ -39,6 +49,30 @@ public class UserTest extends TestCase {
         calendar.set(YEAR_OF_BIRTH_1, MONTH_OF_BIRTH_1, DAY_OF_BIRTH);
         user.setDateOfBirth(calendar.getTime());
         assertEquals(ETHALON_AGE_1, user.getAge());
+    }
+
+    //Test to get age, if birthday is today
+    public void testGetAgeT() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(YEAR_OF_BIRTH, MONTH_OF_BIRTH_2, DAY_OF_BIRTH_1);
+        user.setDateOfBirth(calendar.getTime());
+        assertEquals(ETHALON_AGE, user.getAge());
+    }
+
+    //Test to get age, if birthday in this month but earlier then now
+    public void testGetAgeDayBefore() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(YEAR_OF_BIRTH, MONTH_OF_BIRTH_2, DAY_OF_BIRTH_2);
+        user.setDateOfBirth(calendar.getTime());
+        assertEquals(ETHALON_AGE_3, user.getAge());
+    }
+
+    // Test to get age, if birthday in this month and later
+    public void testGetAgeDayAfter() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(YEAR_OF_BIRTH, MONTH_OF_BIRTH_2, DAY_OF_BIRTH_3);
+        user.setDateOfBirth(calendar.getTime());
+        assertEquals(ETHALON_AGE, user.getAge());
     }
 
     protected void setUp() throws Exception{
