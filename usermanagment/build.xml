@@ -2,7 +2,7 @@
 
 <project name="usermanagment" basedir="." default="test">
   <description>
-    description
+    Mechanism that helps us manage users into information system
   </description>
 
   <property name="test-java-dir" value="${basedir}/src/test/java" />
