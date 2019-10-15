@@ -34,7 +34,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
         assertEquals(user.getDateOfBirth(), userToCheck.getDateOfBirth());
     }
 
-    public void TestFindAll() throws DatabaseException {
+    public void testFindAll() throws DatabaseException {
         Collection<User> items = dao.findAll();
         assertNotNull(items);
         assertEquals("Collection size doesn't match ethalon.", NUMBER_OF_ROWS, items.size());
