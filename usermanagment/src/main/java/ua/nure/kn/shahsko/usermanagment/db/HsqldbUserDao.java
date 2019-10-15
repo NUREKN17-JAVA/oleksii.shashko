@@ -4,11 +4,16 @@ import ua.nure.kn.shahsko.usermanagment.domain.User;
 
 import java.sql.*;
 import java.util.Collection;
+import java.util.LinkedList;
 
 public class HsqldbUserDao implements Dao<User> {
 
-    public static final String INSERT_QUERY = "INSERT INTO users (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
-    public static final String FUNCTION_IDETITY = "call IDENTITY()";
+    public static final String INSERT_QUERY =
+            "INSERT INTO users (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
+    public static final String FUNCTION_IDETITY =
+            "call IDENTITY()";
+    public static final String SELECT_FIND_ALL =
+            "SELECT * FROM users";
     private final ConnectionFactory connectionFactory;
 
     public HsqldbUserDao(ConnectionFactory connectionFactory) {
@@ -66,6 +71,32 @@ public class HsqldbUserDao implements Dao<User> {
 
     @Override
     public Collection<User> findAll() throws DatabaseException {
-        return null;
+        Collection<User> result = new LinkedList<User>();
+
+        try {
+            Connection connection = connectionFactory.createConnection();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(SELECT_FIND_ALL);
+
+            while (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getLong(1));
+                user.setFirstName(resultSet.getString(2));
+                user.setLastName(resultSet.getString(3));
+                user.setDateOfBirth(resultSet.getDate(4));
+
+                result.add(user);
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (DatabaseException e) {
+            throw e;
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
+        }
+
+        return result;
     }
 }
