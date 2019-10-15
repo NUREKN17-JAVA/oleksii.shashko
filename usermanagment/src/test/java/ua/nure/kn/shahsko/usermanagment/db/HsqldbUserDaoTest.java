@@ -1,6 +1,7 @@
 package ua.nure.kn.shahsko.usermanagment.db;
 
 import org.dbunit.DatabaseTestCase;
+import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import ua.nure.kn.shahsko.usermanagment.domain.User;
@@ -12,6 +13,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
     public static final String FIRST_NAME = "John";
     public static final String LAST_NAME = "Doe";
     private HsqldbUserDao dao;
+    private ConnectionFactory connectionFactory;
 
     public void testCase() throws DatabaseException {
         User user = new User();
@@ -32,7 +34,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        dao = new HsqldbUserDao();
+        dao = new HsqldbUserDao(connectionFactory);
     }
 
     @Override
@@ -42,7 +44,8 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
 
     @Override
     protected IDatabaseConnection getConnection() throws Exception {
-        return null;
+        connectionFactory = new ConnectionFactoryImpl();
+        return new DatabaseConnection(connectionFactory.createConnection());
     }
 
     @Override

@@ -5,6 +5,13 @@ import ua.nure.kn.shahsko.usermanagment.domain.User;
 import java.util.Collection;
 
 public class HsqldbUserDao implements Dao<User> {
+
+    private final ConnectionFactory connectionFactory;
+
+    public HsqldbUserDao(ConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
+
     @Override
     public User create(User entity) throws DatabaseException {
         return null;
