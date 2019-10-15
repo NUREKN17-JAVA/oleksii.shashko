@@ -8,9 +8,9 @@ import java.util.Date;
 public class UserTest extends TestCase {
 
     private static final int DAY_OF_BIRTH = 13;
-    private static final int DAY_OF_BIRTH_1 = 3;
-    private static final int DAY_OF_BIRTH_2 = 1;
-    private static final int DAY_OF_BIRTH_3 = 4;
+    private static final int DAY_OF_BIRTH_1 = 15;
+    private static final int DAY_OF_BIRTH_2 = 14;
+    private static final int DAY_OF_BIRTH_3 = 16;
 
     private static final int MONTH_OF_BIRTH = Calendar.MAY;
     private static final int YEAR_OF_BIRTH = 2000;
