@@ -23,7 +23,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
         User userToCheck = dao.create(user);
         assertNotNull(userToCheck);
         assertNotNull(userToCheck.getId());
-        
+
         assertEquals(user.getFirstName(), userToCheck.getFirstName());
         assertEquals(user.getLastName(), userToCheck.getLastName());
         assertEquals(user.getDateOfBirth(), userToCheck.getDateOfBirth());
