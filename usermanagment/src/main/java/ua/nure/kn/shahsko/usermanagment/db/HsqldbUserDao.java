@@ -11,6 +11,9 @@ class HsqldbUserDao implements Dao<User> {
     private static final String INSERT_QUERY = "INSERT INTO users (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
     private static final String FUNCTION_IDETITY = "call IDENTITY()";
     private static final String SELECT_FIND_ALL = "SELECT * FROM users";
+    private static final String FIND_SQL = "SELECT * FROM USERS WHERE id=?";
+    private static final String UPDATE_SQL = "UPDATE USERS SET firstname = ?, lastname = ?, dateofbirth = ? WHERE id = ?";
+    public static final String DELETE_SQL = "DELETE FROM USERS WHERE id=?";
     private ConnectionFactory connectionFactory;
 
     HsqldbUserDao() {}
@@ -63,17 +66,77 @@ class HsqldbUserDao implements Dao<User> {
 
     @Override
     public void update(User entity) throws DatabaseException {
+        try {
+            Connection connection = connectionFactory.createConnection();
+            PreparedStatement statement = connection.prepareStatement(UPDATE_SQL);
+            statement.setString(1, entity.getFirstName());
+            statement.setString(2, entity.getLastName());
+            statement.setDate(3, new Date(entity.getDateOfBirth().getTime()));
+            statement.setLong(4, entity.getId());
 
+            int result = statement.executeUpdate();
+
+            if(result != 1) {
+                throw new DatabaseException("Number of updated rows: " + result);
+            }
+
+            statement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            throw new DatabaseException(e.toString());
+        }
     }
 
     @Override
     public void delete(User entity) throws DatabaseException {
+        try {
+            Connection connection = connectionFactory.createConnection();
+            PreparedStatement statement = connection.prepareStatement(DELETE_SQL);
+            statement.setLong(1, entity.getId());
 
+            int result = statement.executeUpdate();
+
+            if(result != 1) {
+                throw new DatabaseException("Number of deleted rows: " + result);
+            }
+
+            statement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            throw new DatabaseException(e.toString());
+        }
     }
 
     @Override
     public User find(Long id) throws DatabaseException {
-        return null;
+        User user = null;
+
+        try {
+            Connection connection = connectionFactory.createConnection();
+            PreparedStatement statement = connection.prepareStatement(FIND_SQL);
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            if(resultSet.next()) {
+                user = new User();
+                user.setId(resultSet.getLong(1));
+                user.setFirstName(resultSet.getString(2));
+                user.setLastName(resultSet.getString(3));
+                user.setDateOfBirth(resultSet.getDate(4));
+            }
+
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+
+        } catch (SQLException e) {
+            throw new DatabaseException(e);
+        }
+
+        return user;
     }
 
     @Override
