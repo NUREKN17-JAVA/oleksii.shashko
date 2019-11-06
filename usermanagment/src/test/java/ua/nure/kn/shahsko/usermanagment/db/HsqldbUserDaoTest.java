@@ -28,7 +28,6 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
 
             User userToCheck = dao.create(user);
             assertNotNull(userToCheck);
-            assertNotNull(userToCheck.getId());
 
             assertEquals(user.getFirstName(), userToCheck.getFirstName());
             assertEquals(user.getLastName(), userToCheck.getLastName());
@@ -57,7 +56,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
 
     @Override
     protected IDatabaseConnection getConnection() throws Exception {
-        connectionFactory = new ConnectionFactoryImpl();
+        connectionFactory = new ConnectionFactoryImpl("sa", "", "jdbc:hsqldb:file:db/usermanagment", "org.hsqldb.jdbcDriver");
         return new DatabaseConnection(connectionFactory.createConnection());
     }
 
