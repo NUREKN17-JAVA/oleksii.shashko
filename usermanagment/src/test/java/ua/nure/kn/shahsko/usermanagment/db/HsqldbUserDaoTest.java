@@ -18,7 +18,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
     private HsqldbUserDao dao;
     private ConnectionFactory connectionFactory;
 
-    public void testCase() throws DatabaseException {
+    public void testCreate() throws DatabaseException {
         try {
             User user = new User();
             user.setFirstName(FIRST_NAME);

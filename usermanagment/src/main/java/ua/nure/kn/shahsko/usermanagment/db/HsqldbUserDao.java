@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.Collection;
 import java.util.LinkedList;
 
-public class HsqldbUserDao implements Dao<User> {
+class HsqldbUserDao implements Dao<User> {
 
     private static final String INSERT_QUERY = "INSERT INTO users (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
     private static final String FUNCTION_IDETITY = "call IDENTITY()";
@@ -53,12 +53,12 @@ public class HsqldbUserDao implements Dao<User> {
             statement.close();
             connection.close();
 
-            return entity;
         } catch (DatabaseException e) {
             throw e;
         } catch (SQLException e) {
             throw new DatabaseException(e);
         }
+        return entity;
     }
 
     @Override

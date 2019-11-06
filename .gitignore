@@ -1,8 +1,10 @@
 *.class
 .idea
 *.iml
+usermanagment/db
 usermanagment/out
 *.txt
+settings*
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -21,3 +23,4 @@ bin*
 .settings*
 .classpath
 .project
+Create Table*
