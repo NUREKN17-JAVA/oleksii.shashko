@@ -49,7 +49,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
         assertNotNull(user.getId());
 
         User ethalonUser = dao.create(user);
-        User findedUser = dao.find(TEST_ID);
+        User findedUser = dao.find(ethalonUser.getId());
 
         assertNotNull(findedUser);
         assertEquals(ethalonUser.getId(), findedUser.getId());

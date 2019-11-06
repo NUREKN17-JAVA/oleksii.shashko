@@ -11,9 +11,9 @@ class HsqldbUserDao implements Dao<User> {
     private static final String INSERT_QUERY = "INSERT INTO users (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
     private static final String FUNCTION_IDETITY = "call IDENTITY()";
     private static final String SELECT_FIND_ALL = "SELECT * FROM users";
-    private static final String FIND_SQL = "SELECT * FROM USERS WHERE id=?";
-    private static final String UPDATE_SQL = "UPDATE USERS SET firstname = ?, lastname = ?, dateofbirth = ? WHERE id = ?";
-    public static final String DELETE_SQL = "DELETE FROM USERS WHERE id=?";
+    private static final String FIND_SQL = "SELECT * FROM users WHERE id=?";
+    private static final String UPDATE_SQL = "UPDATE users SET firstname = ?, lastname = ?, dateofbirth = ? WHERE id = ?";
+    private static final String DELETE_SQL = "DELETE FROM users WHERE id=?";
     private ConnectionFactory connectionFactory;
 
     HsqldbUserDao() {}
@@ -47,7 +47,7 @@ class HsqldbUserDao implements Dao<User> {
             CallableStatement callableStatement = connection
                     .prepareCall(FUNCTION_IDETITY);
             ResultSet keys = callableStatement.executeQuery();
-            if (!keys.next()) {
+            if (keys.next()) {
                 entity.setId(keys.getLong(1)); // Mutation
             }
 
