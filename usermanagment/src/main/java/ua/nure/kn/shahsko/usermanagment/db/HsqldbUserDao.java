@@ -8,15 +8,22 @@ import java.util.LinkedList;
 
 public class HsqldbUserDao implements Dao<User> {
 
-    public static final String INSERT_QUERY =
-            "INSERT INTO users (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
-    public static final String FUNCTION_IDETITY =
-            "call IDENTITY()";
-    public static final String SELECT_FIND_ALL =
-            "SELECT * FROM users";
-    private final ConnectionFactory connectionFactory;
+    private static final String INSERT_QUERY = "INSERT INTO users (firstname, lastname, dateofbirth) VALUES (?, ?, ?)";
+    private static final String FUNCTION_IDETITY = "call IDENTITY()";
+    private static final String SELECT_FIND_ALL = "SELECT * FROM users";
+    private ConnectionFactory connectionFactory;
 
-    public HsqldbUserDao(ConnectionFactory connectionFactory) {
+    HsqldbUserDao() {}
+
+    public ConnectionFactory getConnectionFactory() {
+        return connectionFactory;
+    }
+
+    public void setConnectionFactory(ConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
+
+    HsqldbUserDao(ConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
     }
 
