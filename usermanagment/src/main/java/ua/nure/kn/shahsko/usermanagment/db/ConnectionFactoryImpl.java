@@ -6,10 +6,19 @@ import java.sql.SQLException;
 
 public class ConnectionFactoryImpl implements ConnectionFactory {
 
-    private String url = "jdbc:hsqldb:file:db/usermanagement";
-    private String user = "sa";
-    private String password = "";
-    private String driver = "org.hsqldb.jdbcDriver";
+    private String url;
+    private String user;
+    private String password;
+    private String driver;
+
+    ConnectionFactoryImpl() {}
+
+    ConnectionFactoryImpl(String user, String password, String url, String driver) {
+        this.user = user;
+        this.url = url;
+        this.password = password;
+        this.driver = driver;
+    }
 
     @Override
     public Connection createConnection() throws DatabaseException {

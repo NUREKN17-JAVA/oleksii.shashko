@@ -1,5 +1,7 @@
 package ua.nure.kn.shahsko.usermanagment.db;
 
+import ua.nure.kn.shahsko.usermanagment.domain.User;
+
 import java.io.IOException;
 import java.util.Properties;
 
@@ -7,13 +9,15 @@ public abstract class DaoFactory {
 
     private static final String DAO_FACTORY = "dao.factory";
 
+    private static DaoFactory instance;
+    private static Properties properties;
+    private Dao<User> userDao;
+
+    private static final String SETTINGS_PROPERTIES = "settings.properties";
+
+
     protected DaoFactory() {
     }
-
-    private static DaoFactory instance;
-    protected static Properties properties;
-
-    public static final String SETTINGS_PROPERTIES = "settings.properties";
 
     static {
         properties = new Properties();
@@ -35,5 +39,18 @@ public abstract class DaoFactory {
             }
         }
         return instance;
+    }
+
+    private ConnectionFactory createConnection() {
+        String user = properties.getProperty("connection.user");
+        String password = properties.getProperty("connection.password");
+        String url = properties.getProperty("connection.url");
+        String driver = properties.getProperty("connection.driver");
+
+        return new ConnectionFactoryImpl(user, password, url, driver);
+    }
+
+    public Dao<User> getUserDao() {
+        return userDao;
     }
 }

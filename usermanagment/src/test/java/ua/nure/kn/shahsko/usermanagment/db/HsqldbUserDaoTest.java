@@ -19,19 +19,23 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
     private ConnectionFactory connectionFactory;
 
     public void testCase() throws DatabaseException {
-        User user = new User();
-        user.setFirstName(FIRST_NAME);
-        user.setLastName(LAST_NAME);
-        user.setDateOfBirth(new Date());
-        assertNull(user.getId());
+        try {
+            User user = new User();
+            user.setFirstName(FIRST_NAME);
+            user.setLastName(LAST_NAME);
+            user.setDateOfBirth(new Date());
+            assertNull(user.getId());
 
-        User userToCheck = dao.create(user);
-        assertNotNull(userToCheck);
-        assertNotNull(userToCheck.getId());
+            User userToCheck = dao.create(user);
+            assertNotNull(userToCheck);
+            assertNotNull(userToCheck.getId());
 
-        assertEquals(user.getFirstName(), userToCheck.getFirstName());
-        assertEquals(user.getLastName(), userToCheck.getLastName());
-        assertEquals(user.getDateOfBirth(), userToCheck.getDateOfBirth());
+            assertEquals(user.getFirstName(), userToCheck.getFirstName());
+            assertEquals(user.getLastName(), userToCheck.getLastName());
+            assertEquals(user.getDateOfBirth(), userToCheck.getDateOfBirth());
+        } catch (DatabaseException e) {
+            fail(e.toString());
+        }
     }
 
     public void testFindAll() throws DatabaseException {
