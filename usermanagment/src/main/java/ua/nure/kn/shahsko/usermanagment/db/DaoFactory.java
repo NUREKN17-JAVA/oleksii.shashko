@@ -50,7 +50,15 @@ public abstract class DaoFactory {
         return new ConnectionFactoryImpl(user, password, url, driver);
     }
 
-    public Dao<User> getUserDao() {
+    public Dao<User> getUserDao() throws ReflectiveOperationException {
+        try {
+            Class UserDaoClass = Class.forName(properties.getProperty("dao.ua.nure.kn.shahsko.usermanagment.db.Dao"));
+            userDao = (Dao<User>) UserDaoClass.newInstance();
+            userDao.setConnectionFactory(createConnection());
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+            throw new ReflectiveOperationException(e);
+        }
+        
         return userDao;
     }
 }
