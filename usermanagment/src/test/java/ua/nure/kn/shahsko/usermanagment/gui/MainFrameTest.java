@@ -15,6 +15,8 @@ public class MainFrameTest extends JFCTestCase {
     private static final String DELETE_BUTTON_COMPONENT_NAME = "deleteButton";
     private static final String DETAIL_BUTTON_COMPONENT_NAME = "detailButton";
 
+    private static final String USER_TABLE_COMPONENT_NAME = "userTable";
+
     private MainFrame mainFrame;
 
     public void setUp() throws Exception {
@@ -33,6 +35,7 @@ public class MainFrameTest extends JFCTestCase {
 
     public void testBrowseControl() {
         find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
+        find(JTable.class, USER_TABLE_COMPONENT_NAME);
         find(JButton.class, ADD_BUTTON_COMPONENT_NAME);
         find(JButton.class, EDIT_BUTTON_COMPONENT_NAME);
         find(JButton.class, DELETE_BUTTON_COMPONENT_NAME);

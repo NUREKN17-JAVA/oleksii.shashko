@@ -11,6 +11,10 @@ public class MainFrame extends JFrame {
     private BrowsePanel browsePanel;
 
     MainFrame() {
+        initialize();
+    }
+
+    private void initialize() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(WIDTH, HEIGHT);
         this.setTitle("Управление пользователями"); // localize
