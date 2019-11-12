@@ -9,6 +9,7 @@ public class MainFrame extends JFrame {
 
     private JPanel contentPanel;
     private BrowsePanel browsePanel;
+    private AddPanel addPanel;
 
     MainFrame() {
         initialize();
@@ -19,6 +20,23 @@ public class MainFrame extends JFrame {
         this.setSize(WIDTH, HEIGHT);
         this.setTitle("Управление пользователями"); // localize
         this.setContentPane(getContentPanel());
+    }
+
+    public void showAddPanel() {
+        showPanel(getAddPanel());
+    }
+
+    private void showPanel(JPanel panel) {
+        getContentPane().add(panel, BorderLayout.CENTER);
+        panel.setVisible(true);
+        panel.repaint();
+    }
+
+    private AddPanel getAddPanel() {
+        if(addPanel == null) {
+            addPanel = new AddPanel(this);
+        }
+        return addPanel;
     }
 
     private JPanel getContentPanel() {
@@ -37,4 +55,5 @@ public class MainFrame extends JFrame {
 
         return browsePanel;
     }
+
 }
