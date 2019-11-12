@@ -3,6 +3,7 @@ package ua.nure.kn.shahsko.usermanagment.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class ConnectionFactoryImpl implements ConnectionFactory {
 
@@ -18,6 +19,13 @@ public class ConnectionFactoryImpl implements ConnectionFactory {
         this.url = url;
         this.password = password;
         this.driver = driver;
+    }
+
+    public ConnectionFactoryImpl(Properties properties) {
+        user = properties.getProperty("connection.user");
+        password = properties.getProperty("connection.password");
+        url = properties.getProperty("connection.url");
+        driver = properties.getProperty("connection.driver");
     }
 
     @Override
