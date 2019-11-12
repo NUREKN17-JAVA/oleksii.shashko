@@ -5,9 +5,16 @@ import junit.extensions.jfcunit.JFCTestHelper;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class MainFrameTest extends JFCTestCase {
+    private static final String BROWSE_PANEL_COMPONENT_NAME = "browsePanel";
+    private static final String ADD_BUTTON_COMPONENT_NAME = "addButton";
+    private static final String EDIT_BUTTON_COMPONENT_NAME = "editButton";
+    private static final String DELETE_BUTTON_COMPONENT_NAME = "deleteButton";
+    private static final String DETAIL_BUTTON_COMPONENT_NAME = "detailButton";
+
     private MainFrame mainFrame;
 
     public void setUp() throws Exception {
@@ -22,6 +29,14 @@ public class MainFrameTest extends JFCTestCase {
         getHelper();
         TestHelper.cleanUp(this);
         super.tearDown();
+    }
+
+    public void testBrowseControl() {
+        find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
+        find(JButton.class, ADD_BUTTON_COMPONENT_NAME);
+        find(JButton.class, EDIT_BUTTON_COMPONENT_NAME);
+        find(JButton.class, DELETE_BUTTON_COMPONENT_NAME);
+        find(JButton.class, DETAIL_BUTTON_COMPONENT_NAME);
     }
 
     private Component find(Class<?> componentClass, String name) {
