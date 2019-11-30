@@ -46,7 +46,7 @@ public class AddPanel extends JPanel implements ActionListener {
             fieldPanel.setLayout(new GridLayout(3, 2));
             addLabeledField(fieldPanel, "Имя", getFirstNameField()); // localize
             addLabeledField(fieldPanel, "Фамилия", getLastNameField()); // localize
-            addLabeledField(fieldPanel, "Дата Рождения", getDateOfBirthField());
+            addLabeledField(fieldPanel, "Дата Рождения", getDateOfBirthField()); //localize
         }
         return fieldPanel;
     }

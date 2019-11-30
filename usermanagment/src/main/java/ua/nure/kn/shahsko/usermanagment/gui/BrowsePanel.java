@@ -31,7 +31,7 @@ public class BrowsePanel extends JPanel implements ActionListener {
     private JButton deleteButton;
     private JButton detailsButton;
 
-    public BrowsePanel(MainFrame mainFrame) {
+    BrowsePanel(MainFrame mainFrame) {
         parent = mainFrame;
         initialize();
     }
