@@ -1,5 +1,7 @@
 package ua.nure.kn.shahsko.usermanagment.gui;
 
+import ua.nure.kn.shahsko.usermanagment.util.Message;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -36,7 +38,7 @@ public class AddPanel extends JPanel implements ActionListener {
     private void initialize() {
         this.setName(ADD_PANEL_COMPONENT_NAME);
         this.setLayout(new BorderLayout());
-        this.add(getFieldPanel(), BorderLayout.CENTER);
+        this.add(getFieldPanel(), BorderLayout.NORTH);
         this.add(getButtonPanel(), BorderLayout.SOUTH);
     }
 
@@ -44,9 +46,9 @@ public class AddPanel extends JPanel implements ActionListener {
         if (fieldPanel == null) {
             fieldPanel = new JPanel();
             fieldPanel.setLayout(new GridLayout(3, 2));
-            addLabeledField(fieldPanel, "Имя", getFirstNameField()); // localize
-            addLabeledField(fieldPanel, "Фамилия", getLastNameField()); // localize
-            addLabeledField(fieldPanel, "Дата Рождения", getDateOfBirthField()); //localize
+            addLabeledField(fieldPanel, Message.getString("name_label")/*"Имя"*/, getFirstNameField());
+            addLabeledField(fieldPanel, Message.getString("surname_label")/*"Фамилия"*/, getLastNameField());
+            addLabeledField(fieldPanel, Message.getString("date.of.birth_label")/*"Дата Рождения"*/, getDateOfBirthField());
         }
         return fieldPanel;
     }
@@ -94,7 +96,7 @@ public class AddPanel extends JPanel implements ActionListener {
     private JButton getCancelButton() {
         if(cancelButton == null) {
             cancelButton = new JButton();
-            cancelButton.setText("Окей"); //localize
+            cancelButton.setText(Message.getString("cancel_button")); //("Окей");
             cancelButton.setName(CANCEL_BUTTON_COMPONENT_NAME);
             cancelButton.setActionCommand(CANCEL_COMMAND);
             cancelButton.addActionListener(this);
@@ -105,7 +107,7 @@ public class AddPanel extends JPanel implements ActionListener {
     private JButton getOkButton() {
         if(okButton == null) {
             okButton = new JButton();
-            okButton.setText("Окей"); //localize
+            okButton.setText(Message.getString("submit_button")); //("Окей");
             okButton.setName(OK_BUTTON_COMPONENT_NAME);
             okButton.setActionCommand(OK_COMMAND);
             okButton.addActionListener(this);

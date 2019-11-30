@@ -1,5 +1,7 @@
 package ua.nure.kn.shahsko.usermanagment.gui;
 
+import ua.nure.kn.shahsko.usermanagment.util.Message;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -59,7 +61,7 @@ public class EditPanel extends JPanel implements ActionListener {
         if (cancelButton == null) {
             cancelButton = new JButton();
             cancelButton.setName(CANCEL_BUTTON_COMPONENT_NAME);
-            cancelButton.setText("Отменить"); //localize
+            cancelButton.setText(Message.getString("cancel_button")); //("Отменить");
             cancelButton.setActionCommand(CANCEL_COMMAND);
             cancelButton.addActionListener(this);
         }
@@ -70,7 +72,7 @@ public class EditPanel extends JPanel implements ActionListener {
         if (submitButton == null) {
             submitButton = new JButton();
             submitButton.setName(OK_BUTTON_COMPONENT_NAME);
-            submitButton.setText("Подтвердить"); //localize
+            submitButton.setText(Message.getString("submit_edit_button")); //("Подтвердить");
             submitButton.setActionCommand(OK_COMMAND);
             submitButton.addActionListener(this);
         }
@@ -81,9 +83,9 @@ public class EditPanel extends JPanel implements ActionListener {
         if (fieldPanel == null) {
             fieldPanel = new JPanel();
             fieldPanel.setLayout(new GridLayout(3, 2));
-            addLabelField(fieldPanel, "Имя", getFirstNameField()); //localize
-            addLabelField(fieldPanel, "Фамилия", getLastNameField()); //localize
-            addLabelField(fieldPanel, "Дата Рождения", getDateOfBirthField()); //localize
+            addLabelField(fieldPanel, Message.getString("name_label")/*"Имя"*/, getFirstNameField());
+            addLabelField(fieldPanel, Message.getString("surname_label")/*"Фамилия"*/, getLastNameField());
+            addLabelField(fieldPanel, Message.getString("date.of.birth_label")/*"Дата Рождения"*/, getDateOfBirthField());
         }
         return fieldPanel;
     }

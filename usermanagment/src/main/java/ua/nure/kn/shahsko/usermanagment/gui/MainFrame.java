@@ -1,5 +1,7 @@
 package ua.nure.kn.shahsko.usermanagment.gui;
 
+import ua.nure.kn.shahsko.usermanagment.util.Message;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -18,7 +20,7 @@ public class MainFrame extends JFrame {
     private void initialize() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(WIDTH, HEIGHT);
-        this.setTitle("Управление пользователями"); // localize
+        this.setTitle(Message.getString("user_management")); //("Управление пользователями");
         this.setContentPane(getContentPanel());
     }
 

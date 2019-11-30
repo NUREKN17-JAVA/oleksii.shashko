@@ -63,8 +63,8 @@ public class MainFrameTest extends JFCTestCase {
 
         find(JPanel.class, ADD_PANEL_COMPONENT_NAME);
         fillFields(FIRST_NAME, SECOND_NAME, DATA_OF_BIRTH);
-        JButton okButton = (JButton) find(JButton.class, OK_BUTTON_COMPONENT_NAME);
 
+        JButton okButton = (JButton) find(JButton.class, OK_BUTTON_COMPONENT_NAME);
         getHelper().enterClickAndLeave(new MouseEventData(this, okButton));
         find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
         // check num of rows in user table
