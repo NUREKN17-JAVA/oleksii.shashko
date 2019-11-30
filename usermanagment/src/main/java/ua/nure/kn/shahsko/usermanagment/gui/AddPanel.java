@@ -23,7 +23,10 @@ public class AddPanel extends JPanel implements ActionListener {
     private JButton okButton;
     private JButton cancelButton;
     private JPanel fieldPanel;
+
     private JTextField firstNameField;
+    private JTextField lastNameField;
+    private JTextField dateOfBirthField;
 
     public AddPanel(MainFrame mainFrame) {
         parent = mainFrame;
@@ -42,9 +45,18 @@ public class AddPanel extends JPanel implements ActionListener {
             fieldPanel = new JPanel();
             fieldPanel.setLayout(new GridLayout(3, 2));
             addLabeledField(fieldPanel, "Имя", getFirstNameField()); // localize
-            // add two other
+            addLabeledField(fieldPanel, "Фамилия", getLastNameField()); // localize
+            addLabeledField(fieldPanel, "Дата Рождения", getDateOfBirthField());
         }
         return fieldPanel;
+    }
+
+    private JTextField getDateOfBirthField() {
+        if (dateOfBirthField == null) {
+            dateOfBirthField = new JTextField();
+            dateOfBirthField.setName(DATE_OF_BIRTH_FIELD_COMPONENT_NAME);
+        }
+        return dateOfBirthField;
     }
 
     private void addLabeledField(JPanel panel, String name, JTextField field) {
@@ -52,6 +64,14 @@ public class AddPanel extends JPanel implements ActionListener {
         label.setLabelFor(field);
         panel.add(label);
         panel.add(field);
+    }
+
+    private JTextField getLastNameField() {
+        if (lastNameField == null) {
+            lastNameField = new JTextField();
+            lastNameField.setName(LAST_NAME_FIELD_COMPONENT_NAME);
+        }
+        return lastNameField;
     }
 
     private JTextField getFirstNameField() {
