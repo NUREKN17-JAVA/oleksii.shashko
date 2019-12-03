@@ -8,9 +8,8 @@ import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.eventdata.StringEventData;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
 import ua.nure.kn.shahsko.usermanagment.db.DaoFactory;
-import ua.nure.kn.shahsko.usermanagment.db.DaoFactoryImpl;
 import ua.nure.kn.shahsko.usermanagment.db.MockDaoFactory;
-import ua.nure.kn.shahsko.usermanagment.db.MockUserDao;
+import ua.nure.kn.shahsko.usermanagment.domain.User;
 import ua.nure.kn.shahsko.usermanagment.util.Message;
 
 import javax.swing.*;
@@ -35,7 +34,7 @@ public class MainFrameTest extends JFCTestCase {
 
     private static final String FIRST_NAME = "John";
     private static final String SECOND_NAME = "Doe";
-    private static final Date DATA_OF_BIRTH = new Date();
+    private static final Date DATE_OF_BIRTH = new Date();
     private static final String FIRST_NAME_FIELD_COMPONENT_NAME = "firstNameField";
     private static final String LAST_NAME_FIELD_COMPONENT_NAME = "lastNameField";
     private static final String DATE_OF_BIRTH_FIELD_COMPONENT_NAME = "dateOfBirthField";
@@ -94,6 +93,15 @@ public class MainFrameTest extends JFCTestCase {
     }
 
     public void testAddPanelOk() {
+        User user = new User(FIRST_NAME, SECOND_NAME, DATE_OF_BIRTH);
+        User expectedUser = new User(1L, FIRST_NAME, SECOND_NAME, DATE_OF_BIRTH);
+
+        mockUserDao.expectAndReturn("create", user, expectedUser);
+
+        ArrayList users = new ArrayList();
+        users.add(expectedUser);
+        mockUserDao.expectAndReturn("findAll", users);
+
         JTable userTable = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
         int expectedRows = 0;
         assertEquals(expectedRows, userTable.getRowCount());
@@ -102,7 +110,7 @@ public class MainFrameTest extends JFCTestCase {
         getHelper().enterClickAndLeave(new MouseEventData(this, addButton));
 
         find(JPanel.class, ADD_PANEL_COMPONENT_NAME);
-        fillFields(FIRST_NAME, SECOND_NAME, DATA_OF_BIRTH);
+        fillFields(FIRST_NAME, SECOND_NAME, DATE_OF_BIRTH);
 
         JButton okButton = (JButton) find(JButton.class, OK_BUTTON_COMPONENT_NAME);
         getHelper().enterClickAndLeave(new MouseEventData(this, okButton));

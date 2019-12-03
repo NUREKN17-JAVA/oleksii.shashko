@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class HsqldbUserDaoTest extends DatabaseTestCase {
 
-    private static final String CONNECTIO_USER = "sa";
+    private static final String CONNECTION_USER = "sa";
     private static final String CONNECTION_PASSWORD = "";
     private static final String CONNECTION_URL = "jdbc:hsqldb:file:db/usermanagment";
     private static final String CONNECTION_DRIVER = "org.hsqldb.jdbcDriver";
@@ -23,7 +23,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
 
     private static final String LAST_NAME = "Doe";
     private static final String UPDATED_LAST_NAME = "Maroon";
-    private static final Long TEST_ID = 4L;
+    private static final Long TEST_ID = 1L;
 
     private static final int NUMBER_OF_ROWS = 2;
 
@@ -116,7 +116,7 @@ public class HsqldbUserDaoTest extends DatabaseTestCase {
 
     @Override
     protected IDatabaseConnection getConnection() throws Exception {
-        connectionFactory = new ConnectionFactoryImpl(CONNECTIO_USER, CONNECTION_PASSWORD, CONNECTION_URL, CONNECTION_DRIVER);
+        connectionFactory = new ConnectionFactoryImpl(CONNECTION_USER, CONNECTION_PASSWORD, CONNECTION_URL, CONNECTION_DRIVER);
         return new DatabaseConnection(connectionFactory.createConnection());
     }
 
