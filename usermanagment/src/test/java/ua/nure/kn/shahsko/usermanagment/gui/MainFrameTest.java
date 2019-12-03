@@ -6,6 +6,7 @@ import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.eventdata.StringEventData;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
+import ua.nure.kn.shahsko.usermanagment.util.Message;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,6 +56,14 @@ public class MainFrameTest extends JFCTestCase {
         find(JButton.class, EDIT_BUTTON_COMPONENT_NAME);
         find(JButton.class, DELETE_BUTTON_COMPONENT_NAME);
         find(JButton.class, DETAIL_BUTTON_COMPONENT_NAME);
+
+        JTable table = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
+
+        int expected_quantity = 3;
+        assertEquals(expected_quantity, table.getColumnCount());
+        assertEquals(Message.getString("id"), table.getColumnName(0));
+        assertEquals(Message.getString("name"), table.getColumnName(1));
+        assertEquals(Message.getString("surname"), table.getColumnName(2));
     }
 
     public void testAddPanelOk() {
