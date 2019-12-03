@@ -1,5 +1,6 @@
 package ua.nure.kn.shahsko.usermanagment.gui;
 
+import com.mockobjects.dynamic.Mock;
 import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;
 import junit.extensions.jfcunit.TestHelper;
@@ -8,12 +9,14 @@ import junit.extensions.jfcunit.eventdata.StringEventData;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
 import ua.nure.kn.shahsko.usermanagment.db.DaoFactory;
 import ua.nure.kn.shahsko.usermanagment.db.DaoFactoryImpl;
+import ua.nure.kn.shahsko.usermanagment.db.MockDaoFactory;
 import ua.nure.kn.shahsko.usermanagment.db.MockUserDao;
 import ua.nure.kn.shahsko.usermanagment.util.Message;
 
 import javax.swing.*;
 import java.awt.*;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
@@ -38,26 +41,39 @@ public class MainFrameTest extends JFCTestCase {
     private static final String DATE_OF_BIRTH_FIELD_COMPONENT_NAME = "dateOfBirthField";
 
     private MainFrame mainFrame;
+    private Mock mockUserDao;
 
     public void setUp() throws Exception {
         super.setUp();
 
-        Properties properties = new Properties();
-        properties.setProperty("dao.UserDao", MockUserDao.class.getName());
-        properties.setProperty("dao.Factory", DaoFactoryImpl.class.getName());
-        DaoFactory.getInstance().init(properties);
+        try {
+            Properties properties = new Properties();
+            properties.setProperty("dao.Factory", MockDaoFactory.class.getName());
 
-        setHelper(new JFCTestHelper());
-        mainFrame = new MainFrame();
+            DaoFactory.getInstance().init(properties);
+
+            mockUserDao = ((MockDaoFactory) DaoFactory.getInstance()).getMockUserDao();
+            mockUserDao.expectAndReturn("findAll", new ArrayList<>());
+
+            setHelper(new JFCTestHelper());
+            mainFrame = new MainFrame();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         mainFrame.setVisible(true);
     }
 
     public void tearDown() throws Exception {
-        mainFrame.setVisible(false);
-        getHelper();
-        TestHelper.cleanUp(this);
-        super.tearDown();
+        try {
+            mockUserDao.verify();
+            mainFrame.setVisible(false);
+            getHelper();
+            TestHelper.cleanUp(this);
+            super.tearDown();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void testBrowseControl() {
