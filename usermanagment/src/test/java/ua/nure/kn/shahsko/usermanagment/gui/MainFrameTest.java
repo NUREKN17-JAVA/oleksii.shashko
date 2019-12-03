@@ -6,12 +6,16 @@ import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.eventdata.StringEventData;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
+import ua.nure.kn.shahsko.usermanagment.db.DaoFactory;
+import ua.nure.kn.shahsko.usermanagment.db.DaoFactoryImpl;
+import ua.nure.kn.shahsko.usermanagment.db.MockUserDao;
 import ua.nure.kn.shahsko.usermanagment.util.Message;
 
 import javax.swing.*;
 import java.awt.*;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 public class MainFrameTest extends JFCTestCase {
     private static final String BROWSE_PANEL_COMPONENT_NAME = "browsePanel";
@@ -37,8 +41,15 @@ public class MainFrameTest extends JFCTestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        mainFrame = new MainFrame();
+
+        Properties properties = new Properties();
+        properties.setProperty("dao.UserDao", MockUserDao.class.getName());
+        properties.setProperty("dao.Factory", DaoFactoryImpl.class.getName());
+        DaoFactory.getInstance().init(properties);
+
         setHelper(new JFCTestHelper());
+        mainFrame = new MainFrame();
+
         mainFrame.setVisible(true);
     }
 
