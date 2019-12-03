@@ -50,12 +50,16 @@ public class MainFrame extends JFrame {
         return contentPanel;
     }
 
-    private Component getBrowsePanel() {
+    private BrowsePanel getBrowsePanel() {
         if(browsePanel == null) {
             browsePanel = new BrowsePanel(this);
         }
 
         return browsePanel;
+    }
+
+    public void showBrowsePanel() {
+        showPanel(getBrowsePanel());
     }
 
 }
