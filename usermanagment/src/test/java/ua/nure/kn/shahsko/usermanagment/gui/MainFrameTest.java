@@ -67,6 +67,10 @@ public class MainFrameTest extends JFCTestCase {
     }
 
     public void testAddPanelOk() {
+        JTable userTable = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
+        int expectedRows = 0;
+        assertEquals(expectedRows, userTable.getRowCount());
+
         JButton addButton = (JButton) find(JButton.class, ADD_BUTTON_COMPONENT_NAME);
         getHelper().enterClickAndLeave(new MouseEventData(this, addButton));
 
@@ -75,8 +79,12 @@ public class MainFrameTest extends JFCTestCase {
 
         JButton okButton = (JButton) find(JButton.class, OK_BUTTON_COMPONENT_NAME);
         getHelper().enterClickAndLeave(new MouseEventData(this, okButton));
+
         find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
-        // check num of rows in user table
+
+        userTable = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
+        expectedRows = 1;
+        assertEquals(expectedRows, userTable.getRowCount());
     }
 
     private void fillFields(String firstName, String secondName, Date dataOfBirth) {
