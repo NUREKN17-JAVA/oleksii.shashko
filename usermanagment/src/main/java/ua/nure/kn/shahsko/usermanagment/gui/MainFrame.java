@@ -1,5 +1,8 @@
 package ua.nure.kn.shahsko.usermanagment.gui;
 
+import ua.nure.kn.shahsko.usermanagment.db.Dao;
+import ua.nure.kn.shahsko.usermanagment.db.DaoFactory;
+import ua.nure.kn.shahsko.usermanagment.domain.User;
 import ua.nure.kn.shahsko.usermanagment.util.Message;
 
 import javax.swing.*;
@@ -13,8 +16,20 @@ public class MainFrame extends JFrame {
     private BrowsePanel browsePanel;
     private AddPanel addPanel;
 
+    private Dao<User> userDao;
+
     MainFrame() {
+        super();
+        try {
+            userDao = DaoFactory.getInstance().getUserDao();
+        } catch (ReflectiveOperationException e) {
+            e.printStackTrace();
+        }
         initialize();
+    }
+
+    public Dao<User> getUserDao() {
+        return userDao;
     }
 
     private void initialize() {
@@ -54,6 +69,7 @@ public class MainFrame extends JFrame {
         if(browsePanel == null) {
             browsePanel = new BrowsePanel(this);
         }
+        ((BrowsePanel) browsePanel).initTable();
 
         return browsePanel;
     }

@@ -1,5 +1,6 @@
 package ua.nure.kn.shahsko.usermanagment.gui;
 
+import ua.nure.kn.shahsko.usermanagment.db.DatabaseException;
 import ua.nure.kn.shahsko.usermanagment.util.Message;
 
 import javax.swing.*;
@@ -112,10 +113,20 @@ public class BrowsePanel extends JPanel implements ActionListener {
         if(userTable == null) {
             userTable = new JTable();
             userTable.setName(USER_TABLE_COMPONENT_NAME);
-            UserTableModel model = new UserTableModel(new ArrayList());
-            userTable.setModel(model);
         }
         return userTable;
+    }
+
+    public void initTable() {
+        UserTableModel model = null;
+
+        try {
+            model = new UserTableModel(parent.getUserDao().findAll());
+        } catch (DatabaseException e) {
+            model = new UserTableModel(new ArrayList());
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        getUserTable().setModel(model);
     }
 
     @Override

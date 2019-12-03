@@ -1,11 +1,15 @@
 package ua.nure.kn.shahsko.usermanagment.gui;
 
+import ua.nure.kn.shahsko.usermanagment.db.DatabaseException;
+import ua.nure.kn.shahsko.usermanagment.domain.User;
 import ua.nure.kn.shahsko.usermanagment.util.Message;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
 
 public class AddPanel extends JPanel implements ActionListener {
     private static final String ADD_PANEL_COMPONENT_NAME = "addPanel";
@@ -117,7 +121,41 @@ public class AddPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if ("ok".equalsIgnoreCase(e.getActionCommand())){
+            User user = new User();
+            user.setFirstName(getFirstNameField().getText());
+            user.setLastName(getLastNameField().getText());
+
+            DateFormat format = DateFormat.getDateInstance();
+            try {
+                user.setDateOfBirth(format.parse(getDateOfBirthField().getText()));
+            } catch (ParseException ex) {
+                getDateOfBirthField().setBackground(Color.RED);
+                return;
+            }
+
+            try {
+                parent.getUserDao().create(user);
+            } catch (DatabaseException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        clearFields();
         this.setVisible(false);
         parent.showBrowsePanel();
+    }
+
+    private void clearFields() {
+        Color bgColor = Color.WHITE;
+
+        getFirstNameField().setText("");
+        getFirstNameField().setBackground(bgColor);
+
+        getLastNameField().setText("");
+        getLastNameField().setBackground(bgColor);
+
+        getDateOfBirthField().setText("");
+        getDateOfBirthField().setBackground(bgColor);
     }
 }
