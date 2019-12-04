@@ -1,6 +1,7 @@
 package ua.nure.kn.shahsko.usermanagment.gui;
 
 import ua.nure.kn.shahsko.usermanagment.db.DatabaseException;
+import ua.nure.kn.shahsko.usermanagment.domain.User;
 import ua.nure.kn.shahsko.usermanagment.util.Message;
 
 import javax.swing.*;
@@ -132,11 +133,42 @@ public class BrowsePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        if ("add".equalsIgnoreCase(actionCommand)) {
+        if (ADD_COMMAND.equalsIgnoreCase(actionCommand)) {
             this.setVisible(false);
             parent.showAddPanel();
         }
+        if (EDIT_COMMAND.equalsIgnoreCase(actionCommand)) {
+            int selectedRow = userTable.getSelectedRow();
+            int selectedColumn = userTable.getSelectedColumn();
 
+            if (selectedColumn != -1 || selectedRow != -1) {
+                this.setVisible(false);
+                parent.showEditPanel();
+            } else {
+                JOptionPane.showMessageDialog(this, "Select user in the table, please!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        if (DELETE_COMMAND.equalsIgnoreCase(actionCommand)) {}
+        if (DETAIL_COMMAND.equalsIgnoreCase(actionCommand)) {}
+    }
 
+    public User getSelectedUser() {
+        int selectedRow = getUserTable().getSelectedRow();
+        int IdColumn = 0;
+
+        User user = null;
+
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please, select user in the table.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Long userId = (Long) userTable.getValueAt(userTable.getSelectedRow(), IdColumn);
+            try {
+                user = parent.getUserDao().find(userId);
+            } catch (DatabaseException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        return user;
     }
 }

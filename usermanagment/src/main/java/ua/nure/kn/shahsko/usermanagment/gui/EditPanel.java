@@ -1,11 +1,15 @@
 package ua.nure.kn.shahsko.usermanagment.gui;
 
+import ua.nure.kn.shahsko.usermanagment.db.DatabaseException;
+import ua.nure.kn.shahsko.usermanagment.domain.User;
 import ua.nure.kn.shahsko.usermanagment.util.Message;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
 
 public class EditPanel extends JPanel implements ActionListener {
 
@@ -24,6 +28,7 @@ public class EditPanel extends JPanel implements ActionListener {
     private static final String CANCEL_COMMAND = "cancel";
 
     private final MainFrame parent;
+    private final User user;
 
     private JPanel fieldPanel;
     private JPanel buttonPanel;
@@ -37,6 +42,7 @@ public class EditPanel extends JPanel implements ActionListener {
 
     EditPanel(MainFrame frame) {
         this.parent = frame;
+        user = parent.getSelectedUser();
         initialize();
     }
 
@@ -94,6 +100,7 @@ public class EditPanel extends JPanel implements ActionListener {
         if (lastNameField == null) {
             lastNameField = new JTextField();
             lastNameField.setName(LAST_NAME_FIELD_COMPONENT_NAME);
+            lastNameField.setText(user.getLastName());
         }
         return lastNameField;
     }
@@ -102,6 +109,7 @@ public class EditPanel extends JPanel implements ActionListener {
         if (dateOfBirthField == null) {
             dateOfBirthField = new JTextField();
             dateOfBirthField.setName(DATE_OF_BIRTH_FIELD_COMPONENT_NAME);
+            dateOfBirthField.setText(user.getDateOfBirth().toString());
         }
         return dateOfBirthField;
     }
@@ -110,6 +118,7 @@ public class EditPanel extends JPanel implements ActionListener {
         if (firstNameField == null) {
             firstNameField = new JTextField();
             firstNameField.setName(FIRST_NAME_FIELD_COMPONENT_NAME);
+            firstNameField.setText(user.getFirstName());
         }
         return firstNameField;
     }
@@ -123,6 +132,62 @@ public class EditPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        String command = e.getActionCommand();
+        if (OK_COMMAND.equalsIgnoreCase(command)) {
+            String firstName = getFirstNameField().getText();
+            String lastName = getLastNameField().getText();
+            String date = getDateOfBirthField().getText();
 
+            if (!firstName.isEmpty() && !lastName.isEmpty() && !date.isEmpty()) {
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+
+                DateFormat format = DateFormat.getDateInstance();
+                try {
+                    user.setDateOfBirth(format.parse(date));
+                } catch (ParseException ex) {
+                    getDateOfBirthField().setBackground(Color.RED);
+                    return;
+                }
+
+                try {
+                    parent.getUserDao().update(user);
+                } catch (DatabaseException ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+                clearFields();
+                this.setVisible(false);
+                parent.showBrowsePanel();
+            } else {
+                JOptionPane.showMessageDialog(this, "Fill all fields, please!", "Error", JOptionPane.ERROR_MESSAGE);
+                if (firstName.isEmpty()) {
+                    getFirstNameField().setBackground(Color.RED);
+                }
+                if (lastName.isEmpty()) {
+                    getLastNameField().setBackground(Color.RED);
+                }
+                if (date.isEmpty()) {
+                    getDateOfBirthField().setBackground(Color.RED);
+                }
+            }
+        } else if (CANCEL_COMMAND.equalsIgnoreCase(command)) {
+            clearFields();
+            this.setVisible(false);
+            parent.showBrowsePanel();
+        }
+    }
+
+    private void clearFields() {
+        Color bgColor = Color.WHITE;
+
+        getFirstNameField().setText("");
+        getFirstNameField().setBackground(bgColor);
+
+        getLastNameField().setText("");
+        getLastNameField().setBackground(bgColor);
+
+        getDateOfBirthField().setText("");
+        getDateOfBirthField().setBackground(bgColor);
     }
 }

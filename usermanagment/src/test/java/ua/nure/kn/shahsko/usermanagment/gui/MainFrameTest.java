@@ -4,6 +4,7 @@ import com.mockobjects.dynamic.Mock;
 import junit.extensions.jfcunit.JFCTestCase;
 import junit.extensions.jfcunit.JFCTestHelper;
 import junit.extensions.jfcunit.TestHelper;
+import junit.extensions.jfcunit.eventdata.JTableMouseEventData;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.eventdata.StringEventData;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
@@ -17,6 +18,7 @@ import java.awt.*;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 public class MainFrameTest extends JFCTestCase {
@@ -31,6 +33,7 @@ public class MainFrameTest extends JFCTestCase {
     private static final String USER_TABLE_COMPONENT_NAME = "userTable";
 
     private static final String ADD_PANEL_COMPONENT_NAME = "addPanel";
+    private static final String EDIT_PANEL_COMPONENT_NAME = "editPanel";
 
     private static final String FIRST_NAME = "John";
     private static final String SECOND_NAME = "Doe";
@@ -38,6 +41,8 @@ public class MainFrameTest extends JFCTestCase {
     private static final String FIRST_NAME_FIELD_COMPONENT_NAME = "firstNameField";
     private static final String LAST_NAME_FIELD_COMPONENT_NAME = "lastNameField";
     private static final String DATE_OF_BIRTH_FIELD_COMPONENT_NAME = "dateOfBirthField";
+    public static final String EDITED_LASTNAME = "Doew";
+    public static final String EDITED_FIRSTNAME = "John";
 
     private MainFrame mainFrame;
     private Mock mockUserDao;
@@ -121,6 +126,47 @@ public class MainFrameTest extends JFCTestCase {
         expectedRows = 1;
         assertEquals(expectedRows, userTable.getRowCount());
     }
+
+//    public void testEditPanelOk() {
+//        User user = new User(FIRST_NAME, SECOND_NAME, DATE_OF_BIRTH);
+//        User expectedUser = new User(1L, FIRST_NAME, SECOND_NAME, DATE_OF_BIRTH);
+//
+//        mockUserDao.expectAndReturn("create", user, expectedUser);
+//
+//        ArrayList users = new ArrayList();
+//        users.add(expectedUser);
+//
+//        mockUserDao.expectAndReturn("findAll", users);
+//        //add user to table
+//        JButton addButton = (JButton) find(JButton.class, ADD_BUTTON_COMPONENT_NAME);
+//        getHelper().enterClickAndLeave(new MouseEventData(this, addButton));
+//
+//        find(JPanel.class, ADD_PANEL_COMPONENT_NAME);
+//        fillFields(FIRST_NAME, SECOND_NAME, DATE_OF_BIRTH);
+//
+//        JButton okCreateButton = (JButton) find(JButton.class, OK_BUTTON_COMPONENT_NAME);
+//        getHelper().enterClickAndLeave(new MouseEventData(this, okCreateButton));
+//
+//        find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
+//        //edit this user
+//        JTable table = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
+//        int expectedRows = 1;
+//        assertEquals(expectedRows, table.getRowCount());
+//
+//        JButton editButton = (JButton) find(JButton.class, EDIT_BUTTON_COMPONENT_NAME);
+//        getHelper().enterClickAndLeave(new JTableMouseEventData(this, table, 0,1,1));
+//        getHelper().enterClickAndLeave(new MouseEventData(this, editButton));
+//
+//        find(JPanel.class, EDIT_PANEL_COMPONENT_NAME);
+//        fillFields(EDITED_FIRSTNAME, EDITED_LASTNAME, DATE_OF_BIRTH);
+//
+//        JButton okButton = (JButton) find(JButton.class, OK_BUTTON_COMPONENT_NAME);
+//        getHelper().enterClickAndLeave(new MouseEventData(this, okButton));
+//
+//        find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
+//        table = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
+//        assertEquals(expectedRows, table.getRowCount());
+//    }
 
     private void fillFields(String firstName, String secondName, Date dataOfBirth) {
         JTextField firstNameField = (JTextField) find(JTextField.class, FIRST_NAME_FIELD_COMPONENT_NAME);

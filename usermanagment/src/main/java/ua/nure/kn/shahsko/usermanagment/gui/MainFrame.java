@@ -13,10 +13,17 @@ public class MainFrame extends JFrame {
     private static final int HEIGHT = 600;
 
     private JPanel contentPanel;
+
     private BrowsePanel browsePanel;
     private AddPanel addPanel;
+    private EditPanel editPanel;
 
     private Dao<User> userDao;
+
+    public static void main(String[] args) {
+        MainFrame frame = new MainFrame();
+        frame.setVisible(true);
+    }
 
     MainFrame() {
         super();
@@ -78,4 +85,18 @@ public class MainFrame extends JFrame {
         showPanel(getBrowsePanel());
     }
 
+    public void showEditPanel() {
+        showPanel(getEditPanel());
+    }
+
+    private JPanel getEditPanel() {
+        if (editPanel == null) {
+            editPanel = new EditPanel(this);
+        }
+        return editPanel;
+    }
+
+    public User getSelectedUser() {
+        return ((BrowsePanel) browsePanel).getSelectedUser();
+    }
 }
