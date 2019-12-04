@@ -7,6 +7,7 @@ import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.JTableMouseEventData;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.eventdata.StringEventData;
+import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
 import ua.nure.kn.shahsko.usermanagment.db.DaoFactory;
 import ua.nure.kn.shahsko.usermanagment.db.MockDaoFactory;
@@ -43,6 +44,7 @@ public class MainFrameTest extends JFCTestCase {
     private static final String DATE_OF_BIRTH_FIELD_COMPONENT_NAME = "dateOfBirthField";
     public static final String EDITED_LASTNAME = "Doew";
     public static final String EDITED_FIRSTNAME = "John";
+    public static final String DIALOG_NAME_USER_INFORMATION = "User information";
 
     private MainFrame mainFrame;
     private Mock mockUserDao;
@@ -127,46 +129,81 @@ public class MainFrameTest extends JFCTestCase {
         assertEquals(expectedRows, userTable.getRowCount());
     }
 
-//    public void testEditPanelOk() {
-//        User user = new User(FIRST_NAME, SECOND_NAME, DATE_OF_BIRTH);
-//        User expectedUser = new User(1L, FIRST_NAME, SECOND_NAME, DATE_OF_BIRTH);
-//
-//        mockUserDao.expectAndReturn("create", user, expectedUser);
-//
-//        ArrayList users = new ArrayList();
-//        users.add(expectedUser);
-//
-//        mockUserDao.expectAndReturn("findAll", users);
-//        //add user to table
-//        JButton addButton = (JButton) find(JButton.class, ADD_BUTTON_COMPONENT_NAME);
-//        getHelper().enterClickAndLeave(new MouseEventData(this, addButton));
-//
-//        find(JPanel.class, ADD_PANEL_COMPONENT_NAME);
-//        fillFields(FIRST_NAME, SECOND_NAME, DATE_OF_BIRTH);
-//
-//        JButton okCreateButton = (JButton) find(JButton.class, OK_BUTTON_COMPONENT_NAME);
-//        getHelper().enterClickAndLeave(new MouseEventData(this, okCreateButton));
-//
-//        find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
-//        //edit this user
-//        JTable table = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
-//        int expectedRows = 1;
-//        assertEquals(expectedRows, table.getRowCount());
-//
-//        JButton editButton = (JButton) find(JButton.class, EDIT_BUTTON_COMPONENT_NAME);
-//        getHelper().enterClickAndLeave(new JTableMouseEventData(this, table, 0,1,1));
-//        getHelper().enterClickAndLeave(new MouseEventData(this, editButton));
-//
-//        find(JPanel.class, EDIT_PANEL_COMPONENT_NAME);
-//        fillFields(EDITED_FIRSTNAME, EDITED_LASTNAME, DATE_OF_BIRTH);
-//
-//        JButton okButton = (JButton) find(JButton.class, OK_BUTTON_COMPONENT_NAME);
-//        getHelper().enterClickAndLeave(new MouseEventData(this, okButton));
-//
-//        find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
-//        table = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
-//        assertEquals(expectedRows, table.getRowCount());
-//    }
+    public void testEditPanelOk() {
+        User user = new User(FIRST_NAME, SECOND_NAME, DATE_OF_BIRTH);
+        User expectedUser = new User(1L, FIRST_NAME, SECOND_NAME, DATE_OF_BIRTH);
+
+        mockUserDao.expectAndReturn("create", user, expectedUser);
+
+        ArrayList users = new ArrayList();
+        users.add(expectedUser);
+
+        mockUserDao.expectAndReturn("findAll", users);
+        //add user to table
+        JButton addButton = (JButton) find(JButton.class, ADD_BUTTON_COMPONENT_NAME);
+        getHelper().enterClickAndLeave(new MouseEventData(this, addButton));
+
+        find(JPanel.class, ADD_PANEL_COMPONENT_NAME);
+        fillFields(FIRST_NAME, SECOND_NAME, DATE_OF_BIRTH);
+
+        JButton okCreateButton = (JButton) find(JButton.class, OK_BUTTON_COMPONENT_NAME);
+        getHelper().enterClickAndLeave(new MouseEventData(this, okCreateButton));
+
+        find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
+        //edit this user
+        JTable table = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
+        int expectedRows = 1;
+        assertEquals(expectedRows, table.getRowCount());
+
+        JButton editButton = (JButton) find(JButton.class, EDIT_BUTTON_COMPONENT_NAME);
+        getHelper().enterClickAndLeave(new JTableMouseEventData(this, table, 0,1,1));
+        getHelper().enterClickAndLeave(new MouseEventData(this, editButton));
+
+        find(JPanel.class, EDIT_PANEL_COMPONENT_NAME);
+        fillFields(EDITED_FIRSTNAME, EDITED_LASTNAME, DATE_OF_BIRTH);
+
+        JButton okButton = (JButton) find(JButton.class, OK_BUTTON_COMPONENT_NAME);
+        getHelper().enterClickAndLeave(new MouseEventData(this, okButton));
+
+        find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
+        table = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
+        assertEquals(expectedRows, table.getRowCount());
+    }
+
+    public void testDetailPanel() {
+        User user = new User(FIRST_NAME, SECOND_NAME, DATE_OF_BIRTH);
+        User expectedUser = new User(1L, FIRST_NAME, SECOND_NAME, DATE_OF_BIRTH);
+
+        mockUserDao.expectAndReturn("create", user, expectedUser);
+
+        ArrayList users = new ArrayList();
+        users.add(expectedUser);
+
+        mockUserDao.expectAndReturn("findAll", users);
+        //add user to table
+        JButton addButton = (JButton) find(JButton.class, ADD_BUTTON_COMPONENT_NAME);
+        getHelper().enterClickAndLeave(new MouseEventData(this, addButton));
+
+        find(JPanel.class, ADD_PANEL_COMPONENT_NAME);
+        fillFields(FIRST_NAME, SECOND_NAME, DATE_OF_BIRTH);
+
+        JButton okCreateButton = (JButton) find(JButton.class, OK_BUTTON_COMPONENT_NAME);
+        getHelper().enterClickAndLeave(new MouseEventData(this, okCreateButton));
+
+        find(JPanel.class, BROWSE_PANEL_COMPONENT_NAME);
+
+        JTable table = (JTable) find(JTable.class, USER_TABLE_COMPONENT_NAME);
+        int expectedRows = 1;
+        assertEquals(expectedRows, table.getRowCount());
+
+        JButton detailButton = (JButton) find(JButton.class, DETAIL_BUTTON_COMPONENT_NAME);
+        getHelper().enterClickAndLeave(new JTableMouseEventData(this, table, 0,1,1));
+        getHelper().enterClickAndLeave(new MouseEventData(this, detailButton));
+
+        DialogFinder dialogFinder = new DialogFinder(DIALOG_NAME_USER_INFORMATION);
+        JDialog dialog = (JDialog) dialogFinder.find();
+        assertNotNull(dialog);
+    }
 
     private void fillFields(String firstName, String secondName, Date dataOfBirth) {
         JTextField firstNameField = (JTextField) find(JTextField.class, FIRST_NAME_FIELD_COMPONENT_NAME);

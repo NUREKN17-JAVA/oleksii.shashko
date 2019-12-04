@@ -149,7 +149,10 @@ public class BrowsePanel extends JPanel implements ActionListener {
             }
         }
         if (DELETE_COMMAND.equalsIgnoreCase(actionCommand)) {}
-        if (DETAIL_COMMAND.equalsIgnoreCase(actionCommand)) {}
+        if (DETAIL_COMMAND.equalsIgnoreCase(actionCommand)) {
+            User selectedUser = getSelectedUser();
+            JOptionPane.showMessageDialog(this, selectedUser.toString(), "User information", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     public User getSelectedUser() {
