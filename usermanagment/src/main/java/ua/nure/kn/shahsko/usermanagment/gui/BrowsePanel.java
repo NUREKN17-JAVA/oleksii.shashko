@@ -148,7 +148,21 @@ public class BrowsePanel extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Select user in the table, please!", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-        if (DELETE_COMMAND.equalsIgnoreCase(actionCommand)) {}
+        if (DELETE_COMMAND.equalsIgnoreCase(actionCommand)) {
+            User selectedUser = getSelectedUser();
+            if (selectedUser != null) {
+                int result = JOptionPane.showConfirmDialog(this, "Are you sure to delete this user?",
+                        "Confirm deleting", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (result == JOptionPane.YES_OPTION) {
+                    try {
+                        parent.getUserDao().delete(selectedUser);
+                        getUserTable().setModel(new UserTableModel(parent.getUserDao().findAll()));
+                    } catch (DatabaseException ex) {
+                        JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        }
         if (DETAIL_COMMAND.equalsIgnoreCase(actionCommand)) {
             User selectedUser = getSelectedUser();
             JOptionPane.showMessageDialog(this, selectedUser.toString(), "User information", JOptionPane.INFORMATION_MESSAGE);
