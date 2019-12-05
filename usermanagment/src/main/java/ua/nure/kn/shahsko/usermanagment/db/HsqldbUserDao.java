@@ -3,6 +3,7 @@ package ua.nure.kn.shahsko.usermanagment.db;
 import ua.nure.kn.shahsko.usermanagment.domain.User;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -14,6 +15,7 @@ class HsqldbUserDao implements Dao<User> {
     private static final String FIND_SQL = "SELECT * FROM users WHERE id=?";
     private static final String UPDATE_SQL = "UPDATE users SET firstname = ?, lastname = ?, dateofbirth = ? WHERE id = ?";
     private static final String DELETE_SQL = "DELETE FROM users WHERE id=?";
+    public static final String FIND_BY_NAME = "SELECT id, firstname, lastname, dateofbirth FROM USERS WHERE firstname=? AND lastname=?";
     private ConnectionFactory connectionFactory;
 
     HsqldbUserDao() {}
@@ -137,6 +139,37 @@ class HsqldbUserDao implements Dao<User> {
         }
 
         return user;
+    }
+
+    @Override
+    public Collection<User> find(String firstName, String lastName) throws DatabaseException {
+        Collection<User> result = new ArrayList<>();
+
+        try {
+            Connection connection = connectionFactory.createConnection();
+            PreparedStatement statement = connection.prepareStatement(FIND_BY_NAME);
+
+            statement.setString(1, firstName);
+            statement.setString(2, lastName);
+            ResultSet usersResultSet = statement.executeQuery();
+
+            while (usersResultSet.next()) {
+                User user = new User();
+                user.setId(usersResultSet.getLong(1));
+                user.setFirstName(usersResultSet.getString(2));
+                user.setLastName(usersResultSet.getString(3));
+                user.setDateOfBirth(usersResultSet.getDate(4));
+                result.add(user);
+            }
+
+            usersResultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     @Override

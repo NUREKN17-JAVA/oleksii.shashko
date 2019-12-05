@@ -11,6 +11,8 @@ public interface Dao<T> {
 
     T find(Long id) throws DatabaseException;
 
+    Collection<T> find(String firstName, String lastName) throws DatabaseException;
+
     Collection<T> findAll() throws DatabaseException;
 
     void setConnectionFactory(ConnectionFactory connectionFactory);
