@@ -12,15 +12,15 @@ public class UserTableModel extends AbstractTableModel {
     private static final String[] COLUMN_NAMES = {Message.getString("id"),
                                                     Message.getString("name"),
                                                     Message.getString("surname")};
-    private static final Class[] COLUMN_CALSSES = {Long.class, String.class, String.class};
+    private static final Class[] COLUMN_CLASSES = {Long.class, String.class, String.class};
     private List usersList = null;
 
-    UserTableModel(Collection users) {
+    public UserTableModel(Collection users) {
         this.usersList = new ArrayList(users);
     }
 
     public Class getColumnClass(int columnIndex) {
-        return COLUMN_CALSSES[columnIndex];
+        return COLUMN_CLASSES[columnIndex];
     }
 
     public String getColumnName(int columnIndex) {
@@ -50,5 +50,13 @@ public class UserTableModel extends AbstractTableModel {
         }
 
         return null;
+    }
+
+    public void addUsers(Collection<User> users) {
+        this.usersList.addAll(users);
+    }
+
+    public void clearUsers() {
+        this.usersList = new ArrayList();
     }
 }
