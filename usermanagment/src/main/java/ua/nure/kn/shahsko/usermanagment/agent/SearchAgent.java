@@ -1,5 +1,6 @@
 package ua.nure.kn.shahsko.usermanagment.agent;
 
+import jade.core.AID;
 import jade.core.Agent;
 import ua.nure.kn.shahsko.usermanagment.db.DaoFactory;
 import ua.nure.kn.shahsko.usermanagment.db.DatabaseException;
@@ -24,7 +25,7 @@ public class SearchAgent extends Agent {
             if (users.size() > 0) {
                 showUsers(users);
             } else {
-                
+                addBehaviour(new SearchRequestBehaviour(new AID[] {}, firstName, lastName));
             }
         } catch (DatabaseException | ReflectiveOperationException e) {
             throw new SearchException(e);
