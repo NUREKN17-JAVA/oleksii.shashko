@@ -15,6 +15,12 @@ public class BrowserServletTest extends MockServletTestCase {
     private static final String FIRST_NAME = "John";
     private static final String LAST_NAME = "Doe";
 
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+
+    }
+
     public void testBrowse() {
         User user = new User();
         user.setFirstName(FIRST_NAME);
