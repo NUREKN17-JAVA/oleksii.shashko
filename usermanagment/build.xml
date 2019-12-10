@@ -22,7 +22,7 @@
           <include name="**/junit3.8.1.jar" />
         </fileset>
       </classpath>
-      <test name="ua.nure.kn.shahsko.usermanagment.domain.UserTest" />
+      <test name="UserTest" />
       <formatter type="plain" />
     </junit>
   </target>

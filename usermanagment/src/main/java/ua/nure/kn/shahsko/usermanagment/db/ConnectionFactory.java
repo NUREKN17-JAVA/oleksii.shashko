@@ -1,7 +1,0 @@
-package ua.nure.kn.shahsko.usermanagment.db;
-
-import java.sql.Connection;
-
-public interface ConnectionFactory {
-    Connection createConnection() throws DatabaseException;
-}
