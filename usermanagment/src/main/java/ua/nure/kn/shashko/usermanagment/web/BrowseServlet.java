@@ -34,6 +34,6 @@ public class BrowseServlet extends HttpServlet {
     }
 
     private void add(HttpServletRequest req, HttpServletResponse resp) {
-        
+
     }
 }

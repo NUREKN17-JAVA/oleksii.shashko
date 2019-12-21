@@ -18,7 +18,7 @@ public class BrowserServletTest extends MockServletTestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
-
+        createServlet(BrowseServlet.class);
     }
 
     public void testBrowse() {
