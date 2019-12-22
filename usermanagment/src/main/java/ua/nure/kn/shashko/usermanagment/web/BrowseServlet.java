@@ -38,11 +38,36 @@ public class BrowseServlet extends HttpServlet {
     }
 
     private void details(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String idString = getUserId(req, resp);
+        if (idString == null) {
+            return;
+        }
 
+        try {
+            User user = DaoFactory.getInstance().getUserDao().find(Long.valueOf(idString));
+            req.getSession().setAttribute("user", user);
+        } catch (ReflectiveOperationException | DatabaseException e) {
+            req.setAttribute(ERROR_TAG, "ERROR: " + e.toString());
+            req.getRequestDispatcher(BROWSE_JSP).forward(req, resp);
+            return;
+        }
+
+        req.getRequestDispatcher(DETAILS_JSP).forward(req, resp);
     }
 
     private void delete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String idString = getUserId(req, resp);
+        if (idString == null) {
+            return;
+        }
 
+        try {
+            User user = DaoFactory.getInstance().getUserDao().find(Long.valueOf(idString));
+            DaoFactory.getInstance().getUserDao().delete(user);
+        } catch (ReflectiveOperationException | DatabaseException e) {
+            req.setAttribute(ERROR_TAG, "ERROR: " + e.toString());
+        }
+        browse(req, resp);
     }
 
     private String getUserId(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -19,6 +19,11 @@
         <servlet-class>ua.nure.kn.shashko.usermanagment.web.AddServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>Details Servlet</servlet-name>
+        <servlet-class>ua.nure.kn.shashko.usermanagment.web.DetailsServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>Browse Servlet</servlet-name>
         <url-pattern>/browse</url-pattern>
@@ -33,6 +38,11 @@
     <servlet-mapping>
         <servlet-name>Add Servlet</servlet-name>
         <url-pattern>/add</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Details Servlet</servlet-name>
+        <url-pattern>/details</url-pattern>
     </servlet-mapping>
 
 </web-app>
