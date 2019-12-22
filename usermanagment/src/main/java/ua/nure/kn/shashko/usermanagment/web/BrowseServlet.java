@@ -20,6 +20,7 @@ public class BrowseServlet extends HttpServlet {
     private static final String ADD_BUTTON = "addButton";
     private static final String EDIT_JSP = "/edit.jsp";
     private static final String ADD_JSP = "/add.jsp";
+    private static final String ERROR_TAG = "error";
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -44,8 +45,33 @@ public class BrowseServlet extends HttpServlet {
 
     }
 
-    private void edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private String getUserId(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String idString = req.getParameter("id");
+        if (idString == null || idString.trim().length() == 0) {
+            req.setAttribute(ERROR_TAG, "You must select user");
+            req.getRequestDispatcher(BROWSE_JSP).forward(req, resp);
+            return null;
+        }
 
+        return idString;
+    }
+
+    private void edit(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String idString = getUserId(req, resp);
+        if (idString == null) {
+            return;
+        }
+
+        try {
+            User user = DaoFactory.getInstance().getUserDao().find(Long.valueOf(idString));
+            req.getSession().setAttribute("user", user);
+        } catch (Exception e) {
+            req.setAttribute(ERROR_TAG, "ERROR: " + e.toString());
+            req.getRequestDispatcher(BROWSE_JSP).forward(req, resp);
+            return;
+        }
+
+        req.getRequestDispatcher(EDIT_JSP).forward(req, resp);
     }
 
     private void browse(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -53,7 +79,7 @@ public class BrowseServlet extends HttpServlet {
         try {
             users = DaoFactory.getInstance().getUserDao().findAll();
             req.getSession().setAttribute("users", users);
-            req.getRequestDispatcher("/browse.jsp").forward(req, resp);
+            req.getRequestDispatcher(BROWSE_JSP).forward(req, resp);
         } catch (DatabaseException | ReflectiveOperationException e) {
             throw new ServletException(e);
         }

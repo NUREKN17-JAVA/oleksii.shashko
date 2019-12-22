@@ -35,4 +35,16 @@ public class BrowserServletTest extends MockServletTestCase {
         assertNotNull("Could not find list of users in session", sessionAttr);
         assertSame(sessionAttr, users);
     }
+
+    public void testEdit() {
+        User user = new User(1000L, FIRST_NAME, LAST_NAME, new Date());
+
+        getMockUserDao().expectAndReturn("find", 1000L, user);
+        addRequestParameter("editButton", "edit");
+        addRequestParameter("id", "1000");
+        doPost();
+        User userInSession = (User) getWebMockObjectFactory().getMockSession().getAttribute("user");
+        assertNotNull("Could not find user", user);
+        assertSame(user, userInSession);
+    }
 }
