@@ -4,8 +4,6 @@ import ua.nure.kn.shashko.usermanagment.domain.User;
 
 import java.util.Date;
 
-import static junit.framework.TestCase.assertNotNull;
-
 public class EditServletTest extends MockServletTestCase {
 
     @Override
