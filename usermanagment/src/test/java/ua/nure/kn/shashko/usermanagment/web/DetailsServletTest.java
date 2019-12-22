@@ -4,7 +4,7 @@ import ua.nure.kn.shashko.usermanagment.domain.User;
 
 import static junit.framework.Assert.assertNull;
 
-public class TestDetailsServlet extends MockServletTestCase {
+public class DetailsServletTest extends MockServletTestCase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
