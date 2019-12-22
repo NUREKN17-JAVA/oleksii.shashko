@@ -1,7 +1,5 @@
 <%--
   Created by IntelliJ IDEA.
-  Date: 22.12.2019
-  Time: 10:49
   To change this template use File | Settings | File Templates.
 --%>
 

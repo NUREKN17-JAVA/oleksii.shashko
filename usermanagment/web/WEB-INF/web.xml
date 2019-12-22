@@ -3,15 +3,36 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="2.4">
+
+    <servlet>
+        <servlet-name>Browse Servlet</servlet-name>
+        <servlet-class>ua.nure.kn.shashko.usermanagment.web.BrowseServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>Edit Servlet</servlet-name>
+        <servlet-class>ua.nure.kn.shashko.usermanagment.web.EditServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>Add Servlet</servlet-name>
+        <servlet-class>ua.nure.kn.shashko.usermanagment.web.AddServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Browse Servlet</servlet-name>
+        <url-pattern>/browse</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet-mapping>
+        <servlet-name>Edit Servlet</servlet-name>
+        <url-pattern>/edit</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>Add Servlet</servlet-name>
+        <url-pattern>/add</url-pattern>
+    </servlet-mapping>
+
 </web-app>
-
-<servlet>
-    <servlet-name>Browse Servlet</servlet-name>
-    <servlet-class>ua.nure.kn.shashko.usermanagment.web.BrowseServlet</servlet-class>
-</servlet>
-
-<servlet-mapping>
-    <servlet-name>Browse Servlet</servlet-name>
-    <url-pattern>/browse</url-pattern>
-</servlet-mapping>
-
